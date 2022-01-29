@@ -10,13 +10,38 @@ This repo is part of  [Arikaim CMS](http://arikaim.com)  project.
 
 ```sh
 
-
+pip install arikaim-client
 
 ```
 
 ### Usage
 
 ```python
+
+from arikaim_client.client import ArikaimClient
+
+client = ArikaimClient(host,apiKey)
+
+data = {
+    request data fields  key: value
+}
+
+response = client.request(method,url,data)
+
+print(response.status)
+print(response.to_dictonary())
+
+POST request 
+
+response = client.post(url,data)
+
+GET request
+
+response = client.get(url,data)
+
+PUT request
+
+response = client.put(url,data)
 
 
 ```
