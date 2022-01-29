@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+setup.cfg
+src/arikaim_client/apiresponse.py
+src/arikaim_client/client.py
+src/arikaim_client.egg-info/PKG-INFO
+src/arikaim_client.egg-info/SOURCES.txt
+src/arikaim_client.egg-info/dependency_links.txt
+src/arikaim_client.egg-info/top_level.txt
