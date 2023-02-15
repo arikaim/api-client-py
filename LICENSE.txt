@@ -1,6 +1,6 @@
 
 Arikaim CMS
-Copyright (c) 2017 - 2018 Konstantin Atanasov
+Copyright (c) 2017 - 2023 Intersoft Ltd
 
                     GNU General Public License 3
 
