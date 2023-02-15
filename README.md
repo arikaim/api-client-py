@@ -18,7 +18,7 @@ pip install arikaim-client
 
 ```python
 
-from arikaim_client.client import ArikaimClient
+from arikaim.client.client import ArikaimClient
 
 client = ArikaimClient(host,apiKey)
 
