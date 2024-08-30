@@ -9,9 +9,7 @@ This repo is part of  [Arikaim CMS](http://arikaim.com)  project.
 ### Installation
 
 ```sh
-
 pip install arikaim-client
-
 ```
 
 ### Usage
@@ -31,16 +29,18 @@ response = client.request(method,url,data)
 print(response.status)
 print(response.to_dictonary())
 
-POST request 
 
+#Add header
+client.add_header({ 'key': 'value' })
+
+
+#POST request 
 response = client.post(url,data)
 
-GET request
+#GET request
+response = client.get(url)
 
-response = client.get(url,data)
-
-PUT request
-
+#PUT request
 response = client.put(url,data)
 
 

@@ -24,7 +24,7 @@ packages = [
 ],
    
 # Project version number:
-version='1.0.8',
+version='1.0.9',
 
 # List a license for the project, eg. MIT License
 license='MIT License',
@@ -52,6 +52,7 @@ keywords=['arikaim', 'arikaim cms', 'api client'],
 
 # List project dependencies: 
 install_requires=[   
+    'requests'
 ],
 
 # https://pypi.org/classifiers/ 
