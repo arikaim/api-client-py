@@ -6,7 +6,6 @@
 """
 import requests
 
-import http.client
 import json;
 import urllib.parse;
 from . import apiresponse;
@@ -33,10 +32,6 @@ class ArikaimClient:
         """
 
         self._headers = {} 
-        #if ssl == False:
-        #    self._client = http.client.HTTPConnection(host,port,timeout = timeout)
-        #else: 
-        #    self._client = http.client.HTTPSConnection(host,port,timeout = timeout)
         self._endpoint = host
         self.set_api_key(api_key)
         self._headers['Content-Type'] = 'application/json'
@@ -44,11 +39,12 @@ class ArikaimClient:
     def add_haader(self, item):
         self._headers.update(item)
 
-    def set_api_key(self, api_key):
+    def set_api_key(self, api_key: str):
         """ Set api key """
-        if api_key != '':
-            self._api_key = api_key
-            self._headers['Authorization'] = api_key
+        self._api_key = api_key.strip()
+
+        if api_key != '':           
+            self._headers['Authorization'] = self._api_key
 
     def request(self, method, path, data = None, data_encode = 'json'): 
         """
