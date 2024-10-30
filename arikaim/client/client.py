@@ -6,7 +6,7 @@
 """
 import requests
 
-import json;
+from json import dumps, JSONDecodeError
 import urllib.parse;
 from . import apiresponse;
 
@@ -65,18 +65,51 @@ class ArikaimClient:
         """
         if data != None:
             if data_encode == 'json':
-                data = json.dumps(data)
+                data = dumps(data)
             else:                
                 data = urllib.parse.urlencode(data)
 
         url = self._endpoint + path
 
-        response = requests.request(method = method,url = url, data = data, headers = self._headers)
+        response = requests.request(
+            method = method,
+            url = url, 
+            data = data, 
+            headers = self._headers
+        )
+
+        try:
+            data = response.json()
+        except JSONDecodeError:
+            data = {
+                'result': None,
+                'status': 'error',
+                'errors': 'Server response error',
+                'code'  : 500
+            }
+
+        response.close()
+        return apiresponse.ApiResponse(data)
+
+    def uploadFile(self, path, file_name, data = None, method = 'POST'):
+        self._headers.pop('Content-Type')
+        if not data:
+            data = {}
+        
+        data['file'] = open(file_name,'rb')
+
+        response = requests.request(
+            method = method,
+            url = self._endpoint + path,            
+            files = data,
+            headers = self._headers
+        )
+
         data = response.json()
         response.close()
      
         return apiresponse.ApiResponse(data)
-
+    
     def post(self, path, data = None, data_encode = 'json'):
         """ Post request """
         return self.request('POST',path,data,data_encode)
