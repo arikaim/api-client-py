@@ -5,10 +5,11 @@
     license     http://www.arikaim.com/license
 """
 import requests
-
+from base64 import b64decode
 from json import dumps, JSONDecodeError
 import urllib.parse;
-from . import apiresponse;
+from .apiresponse import ApiResponse;
+
 
 class ArikaimClient:
     """ Arikaim CMS api client class """
@@ -36,7 +37,7 @@ class ArikaimClient:
         self.set_api_key(api_key)
         self._headers['Content-Type'] = 'application/json'
 
-    def add_haader(self, item):
+    def add_haader(self, item: any):
         self._headers.update(item)
 
     def set_api_key(self, api_key: str):
@@ -46,7 +47,7 @@ class ArikaimClient:
         if api_key != '':           
             self._headers['Authorization'] = self._api_key
 
-    def request(self, method, path, data = None, data_encode = 'json'): 
+    def request(self, method: str, path: str, data: any = None, data_encode: str = 'json') -> ApiResponse:
         """
             Api request main method
             Parameters
@@ -89,9 +90,9 @@ class ArikaimClient:
             }
 
         response.close()
-        return apiresponse.ApiResponse(data)
+        return ApiResponse(data)
 
-    def uploadFile(self, path, file_name, data = None, method = 'POST'):
+    def uploadFile(self, path: str, file_name: str, data: any = None, method: str = 'POST') -> ApiResponse:
         self._headers.pop('Content-Type')
         if not data:
             data = {}
@@ -108,33 +109,56 @@ class ArikaimClient:
         data = response.json()
         response.close()
      
-        return apiresponse.ApiResponse(data)
+        return ApiResponse(data)
     
-    def post(self, path, data = None, data_encode = 'json'):
+    def post(self, path: str, data: any = None, data_encode: str = 'json') ->ApiResponse:
         """ Post request """
         return self.request('POST',path,data,data_encode)
 
-    def put(self, path, data = None, data_encode = 'json'):
+    def put(self, path: str, data: any = None, data_encode: str = 'json') -> ApiResponse:
         """ Put request """
         return self.request('PUT',path,data,data_encode)
 
-    def get(self, path, data = None):
+    def get(self, path: str, data: any = None) -> ApiResponse:
         """ Get request """
         return self.request('GET',path,data)
 
-    def head(self, path, data = None):
+    def head(self, path: str, data: any = None) -> ApiResponse:
         return self.request('HEAD',path,data)
 
-    def delete(self, path, data = None):
+    def delete(self, path: str, data: any = None) -> ApiResponse:
         """ Delete """
         return self.request('DELETE',path,data)
 
-    def patch(self, path, data = None):
+    def patch(self, path: str, data: any = None) -> ApiResponse:
         """ Patch request """
         return self.request('PATCH',path,data)
     
-    def options(self, path, data = None):
+    def options(self, path: str, data: any = None) -> ApiResponse:
         """ Options request """
         return self.request('OPTIONS',path,data)
 
-        
+    def save_ecoded_file(self, response: ApiResponse, field_name: str, file_name: str) -> bool:
+        data = response.get(field_name)
+        if not data:
+            return False
+
+        if is_encoded(data) == True:
+            data = b64decode(data)
+
+        try:
+            file = open(file_name,'wb')
+            file.write(data)
+            file.close()
+            return True
+        except Exception as error:
+            print(error)
+            return False
+
+       
+def is_encoded(data):
+    try:
+        b64decode(data,validate = True)
+        return True
+    except:
+        return False

@@ -19,7 +19,7 @@ class ApiResponse:
         self._code = 200 
         self._result = {}
 
-    def parse(self,data):
+    def parse(self,data: any):
         if type(data) == str:
             data = json.loads(data)
         
@@ -47,7 +47,7 @@ class ApiResponse:
         return self._errors
 
     @property
-    def result(self,value):
+    def result(self, value: any):
         self._result = value
 
     @property
@@ -55,27 +55,27 @@ class ApiResponse:
         return self._result
 
     @property
-    def status(self,value):
+    def status(self, value: any):
         self._status = value
     
     @property
     def status(self):
-        return self._status;
+        return self._status
 
     @property
-    def code(self,value):
+    def code(self, value: any):
         self._code = value
 
     @property
     def code(self):
         return self._code
 
-    def get(self,key):
+    def get(self, key: str):
         return self._result[key]
 
-    def field(self,key,value):
+    def field(self, key: str, value: any):
         self._result[key] = value
 
-    def add_error(self,error):
+    def add_error(self, error: str):
         self._errors.append(error)
         
