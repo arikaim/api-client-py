@@ -20,11 +20,11 @@ name='arikaim-client',
 
 # Packages to include in the distribution: 
 packages = [
-    'arikaim.client'
+    'arikaim'
 ],
    
 # Project version number:
-version='1.0.16',
+version='1.0.18',
 
 # List a license for the project, eg. MIT License
 license='MIT License',
