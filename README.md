@@ -16,7 +16,7 @@ pip install arikaim-client
 
 ```python
 
-from arikaim.client.client import ArikaimClient
+from arikaim.client import ArikaimClient
 
 client = ArikaimClient(host,apiKey)
 
@@ -43,5 +43,11 @@ response = client.get(url)
 #PUT request
 response = client.put(url,data)
 
+
+# Save  base64 encoded file
+client.save_ecoded_file(response,field_name, file_name)
+
+# upload local file
+client.upload(path, file_name, field_name, data, method = POST)
 
 ```
